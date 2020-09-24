@@ -4,6 +4,7 @@ package br.edu.insper;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,6 +49,11 @@ public class Cria extends HttpServlet {
 		pessoa.setIdade(Integer.parseInt(request.getParameter("idade")));
 		
 		dao.adiciona(pessoa);
+		
+		List<Pessoa> pessoas = dao.getLista();
+		request.setAttribute("pessoas", pessoas);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/lista.jsp");
+		dispatcher.forward(request, response);
 		
 		PrintWriter out = response.getWriter();
 		out.println("<html><body>ADICIONADO</body></html>");
